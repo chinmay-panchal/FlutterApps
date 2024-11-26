@@ -33,6 +33,7 @@ class _ExpensesState extends State<Expenses> {
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (ctx) => NewExpense(onAddExpense: _addExpense),
@@ -50,7 +51,8 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars(); // for not delaying the current removed expense's undo option
+    ScaffoldMessenger.of(context)
+        .clearSnackBars(); // for not delaying the current removed expense's undo option
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 3),
@@ -69,6 +71,9 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    // print(MediaQuery.of(context).size.height);
+
     Widget mainContent = const Center(
       child: Text('No expense found. Start adding some!'),
     );
@@ -90,15 +95,25 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: Column(
+      body: width < 500 
+      ? Column(
+          children: [
+            // const Text('chart'),
+            Chart(expenses: _registeredExpenses),
+            Expanded(
+              child: mainContent,
+            )
+          ],
+        )
+      : Row(
         children: [
-          // const Text('chart'),
-          Chart(expenses: _registeredExpenses),
-          Expanded(
-            child: mainContent,
-          )
-        ],
-      ),
+            // const Text('chart'),
+            Expanded(child: Chart(expenses: _registeredExpenses),),
+            Expanded(
+              child: mainContent,
+            ),
+          ],
+      )
     );
   }
 }
