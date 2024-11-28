@@ -52,7 +52,7 @@ class _ExpensesState extends State<Expenses> {
       _registeredExpenses.remove(expense);
     });
     ScaffoldMessenger.of(context)
-        .clearSnackBars(); // pehle wale undo's ko hathane k liye (lagataar boht delete kradiye ho aur current ko undo karna hotoh)
+        .clearSnackBars(); // pehle wale undo's ko hathane k liye (lagataar boht delete kardiye ho aur current ko undo karna hotoh)
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 3),
