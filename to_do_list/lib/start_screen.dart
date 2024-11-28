@@ -22,6 +22,14 @@ class _StartScreenState extends State<StartScreen> {
 
   final _titalController = TextEditingController();
 
+
+  double get commitmentPercentage {
+    int checkedItems = _items.where((item) => item.isChecked).length;
+    int totalItems = _items.length;
+    return totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
+  }
+
+
   void _additem() {
     if (_titalController.text.trim().isEmpty) {
       _showDialog();
@@ -36,14 +44,35 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   void _removeItem(int index) {
+    final removedItem = _items[index];
     setState(() {
       _items.removeAt(index); // Remove item at the given index
     });
+
+    ScaffoldMessenger.of(context)
+        .clearSnackBars(); // pehle wale undo's ko hathane k liye (lagataar boht delete kradiye ho aur current ko undo karna hotoh)
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 3),
+        content: const Text('item deleted'),
+        action: SnackBarAction(
+          label: 'undo',
+          onPressed: () {
+            setState(() {
+              _items.insert(
+                index, removedItem,
+              );
+            });
+          },
+        ),
+      ),
+    );
   }
 
   void _tickItem(int index) {
-    // Handle marking item as done or any other logic
-    print('Item at index $index marked as done!');
+    setState(() {
+      _items[index].isChecked = !_items[index].isChecked;
+    });
   }
 
   @override
@@ -58,8 +87,7 @@ class _StartScreenState extends State<StartScreen> {
           context: context,
           builder: (ctx) => CupertinoAlertDialog(
                 title: const Text('Invalid input'),
-                content: const Text(
-                    'Title is Empty!'),
+                content: const Text('Title is Empty!'),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -74,8 +102,7 @@ class _StartScreenState extends State<StartScreen> {
         context: context,
         builder: (ctx) => AlertDialog(
           title: const Text('Invalid input'),
-          content: const Text(
-              'Title is empty!'),
+          content: const Text('Title is empty!'),
           actions: [
             TextButton(
               onPressed: () {
@@ -106,7 +133,7 @@ class _StartScreenState extends State<StartScreen> {
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(25), // Fully rounded corners
+              borderRadius: BorderRadius.circular(25),
             ),
             padding:
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
@@ -156,10 +183,34 @@ class _StartScreenState extends State<StartScreen> {
               itemBuilder: (context, index) {
                 return DummyItem(
                   _items[index],
-                  onRemoveItem: () => _removeItem(index), // Pass remove function
-                  onTick: () => _tickItem(index), 
+                  onRemoveItem: () =>
+                      _removeItem(index), 
+                  onTick: () => _tickItem(index),
                 );
               },
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                CircularProgressIndicator(
+                  value: commitmentPercentage / 100,
+                  strokeWidth: 2,
+                  valueColor:const AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+                Text(
+                  '${commitmentPercentage.toStringAsFixed(0)}%',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 2, 47, 129),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

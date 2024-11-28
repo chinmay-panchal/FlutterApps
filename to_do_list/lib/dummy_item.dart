@@ -26,12 +26,21 @@ class DummyItem extends StatelessWidget {
           children: [
             IconButton(
               onPressed: onTick,
-              icon: const Icon(
-                Icons.radio_button_unchecked,
+              icon: Icon(
+                item.isChecked
+                    ? Icons.check_circle
+                    : Icons.radio_button_unchecked,
                 color: Colors.green,
               ),
             ),
-            Text(item.text!),
+            Expanded(
+              child: Text(
+                item.text,
+                style: TextStyle(
+                    decoration:
+                        item.isChecked ? TextDecoration.lineThrough : null),
+              ),
+            ),
             IconButton(
                 onPressed: onRemoveItem,
                 icon: const Icon(

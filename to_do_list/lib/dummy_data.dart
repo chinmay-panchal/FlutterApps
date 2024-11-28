@@ -1,11 +1,9 @@
 class DummyData {
+  String text; // Non-nullable
+  bool isChecked;
+
   DummyData({
     required this.text,
+    this.isChecked = false, // Defaults to unchecked
   });
-  
-  bool isdone = false;
-  bool isdeleted = false;
-  String? text;
 }
-
-
