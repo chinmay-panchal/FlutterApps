@@ -17,7 +17,7 @@ class FiltersScreen extends StatefulWidget {
 
   @override
   State<FiltersScreen> createState() {
-    return _FiltersScreenState();
+    return _FiltersScreenState(); 
   }
 }
 
@@ -28,7 +28,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
   var _veganFilterSet = false;
 
   @override
-  void initState() {
+  void initState() { // this is for saving the updated filter's switch
     super.initState();
     _glutenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
     _lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
@@ -42,7 +42,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
       appBar: AppBar(
         title: const Text('Your Filters'),
       ),
-      // drawer: MainDrawer(
+      // if we want the main drawer in filters screen as well, then we can use it:
+      // drawer: MainDrawer( 
       //   onSelectScreen: (identifier) {
       //     Navigator.of(context).pop();
       //     if (identifier == 'meals') {

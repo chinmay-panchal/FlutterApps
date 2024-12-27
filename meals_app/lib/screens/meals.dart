@@ -61,7 +61,7 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
-    if (title == null) { // we are in the tabs screen and clicked on the favourite screen and already we have a title same for the category screen by default no title
+    if (title == null) { // favourite screen m title already h so directly content return karenge
       return content;
     }
 
