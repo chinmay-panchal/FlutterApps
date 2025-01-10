@@ -25,13 +25,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Responsive(),
+      home: const Home(),
       // routes in getx
-      // getPages: [
-      //   GetPage(name: '/', page:() => const Home()),
-      //   GetPage(name: '/screen1', page:() => Screenone()),
-      //   GetPage(name: '/screen2', page:() => const Screentwo()),
-      // ],
+      getPages: [
+        GetPage(name: '/', page:() => const Home()),
+        GetPage(name: '/screen1', page:() => Screenone()),
+        GetPage(name: '/screen2', page:() => const Screentwo()),
+      ],
     );
   }
 }

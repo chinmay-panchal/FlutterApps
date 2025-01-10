@@ -26,7 +26,8 @@ class _ScreenoneState extends State<Screenone> {
               child: TextButton(
                   onPressed: () {
                     // Navigator.pop(context);
-                    Get.to(const Screentwo());
+                    // Get.to(const Screentwo());
+                    Get.toNamed('screen2');
                   },
                   child: const Text('Go to the screen 2'))),
         ],

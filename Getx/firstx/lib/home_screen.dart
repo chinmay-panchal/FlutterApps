@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        Get.snackbar('shri radha', 'vallabh shri harivansh',mainButton: TextButton(onPressed: (){}, child: const Text('Click')), snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
+        Get.snackbar('shri radha', 'vallabh shri harivansh', mainButton: TextButton(onPressed: (){}, child: const Text('Click')), snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.green);
       }),
     );
   }
